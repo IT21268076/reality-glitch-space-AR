@@ -1,0 +1,116 @@
+/* Loading screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.loader {
+    border: 5px solid #333;
+    border-top: 5px solid #4285f4;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* UI elements */
+.ui-container {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.instructions {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+#tracking-status {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    z-index: 100;
+}
+
+/* Help card */
+.help-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    z-index: 200;
+    max-width: 80%;
+    text-align: center;
+}
+
+.help-card h3 {
+    margin-top: 0;
+    color: #4285f4;
+}
+
+.help-card button {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.help-card button:hover {
+    background-color: #3b78e7;
+}
+
+/* Disable default touch behaviors for better AR interaction */
+body {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Visual feedback for interactive elements */
+.clickable {
+    cursor: pointer;
+}
+
+/* Prevent text selection during drag */
+.a-scene {
+    user-select: none;
+    -webkit-user-select: none;
+}
