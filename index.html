@@ -2,8 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reality Glitch AR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <title>Space Reality Journey</title>
     
     <!-- AR.js and A-Frame libraries -->
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
@@ -16,7 +19,7 @@
 <body style="margin: 0; overflow: hidden;">
     <div class="loading-screen">
         <div class="loader"></div>
-        <p>Loading Reality Glitch...</p>
+        <p>Preparing Space Journey...</p>
     </div>
     
     <!-- AR Scene -->
@@ -24,68 +27,190 @@
         
         <!-- Asset management system to preload models -->
         <a-assets>
-            <a-asset-item id="portal-model" src="assets/models/deep_space_skybox/scene.gltf"></a-asset-item>
-            <!-- <a-asset-item id="impossible-model" src="assets/models/impossible-model.glb"></a-asset-item>
-            <a-asset-item id="glitch-model" src="assets/models/glitch-model.glb"></a-asset-item> -->
+            <!-- Models -->
+            <a-asset-item id="astronaut-model" src="assets/models/tripo_astronaut_2_stylized_and_animated/scene.gltf"></a-asset-item>
+            <a-asset-item id="space-model" src="assets/models/deep_space_skybox/scene.gltf"></a-asset-item>
+            <a-asset-item id="ufo-model" src="assets/models/ufo/scene.gltf"></a-asset-item>
+            <a-asset-item id="travel-model" src="assets/models/24_dizzying_space_travel_-_inktober2019/scene.gltf"></a-asset-item>
+            <a-asset-item id="alien-model" src="assets/models/alien_v1/scene.gltf"></a-asset-item>
+            <a-asset-item id="earth-model" src="assets/models/earth_our_fragile_home/scene.gltf"></a-asset-item>
             
-            <audio id="portal-sound" src="assets/sounds/portal.wav"></audio>
-            <!-- <audio id="mysterious-sound" src="assets/sounds/mysterious.mp3" preload="auto"></audio>
-            <audio id="glitch-sound" src="assets/sounds/glitch.mp3" preload="auto"></audio> -->
+            <!-- Sounds -->
+            <audio id="space-ambience" src="assets/sounds/portal.wav" preload="auto"></audio>
+            <audio id="ufo-sound" src="assets/sounds/ufo.wav" preload="auto"></audio>
+            <audio id="earth-sound" src="assets/sounds/earth.wav" preload="auto"></audio>
+            <audio id="space-breath-sound" src="assets/sounds/space_breath.wav" preload="auto"></audio>
             
+            <!-- Textures -->
             <img id="space-sky" src="assets/images/space-sky.jpg">
         </a-assets>
         
-        <!-- Define camera -->
+        <!-- Define camera with cursor for interaction -->
         <a-entity camera>
             <a-entity cursor="fuse: false; rayOrigin: mouse;"></a-entity>
         </a-entity>
         
-        <!-- Portal Marker with Sketchfab Model -->
-        <a-marker id="portal-marker" type="pattern" url="markers/portal.patt">
-            <!-- Container for positioning -->
-            <a-entity id="model-container" position="0 0.5 0">
-                <!-- Portal rim effect -->
-                <!-- <a-torus position="0 0 0" radius="1" radius-tubular="0.05" rotation="90 0 0" color="#9400D3" 
-                        animation="property: material.emissive; from: #000000; to: #9400D3; dur: 2000; loop: true; dir: alternate"
-                        animation__2="property: rotation; from: 90 0 0; to: 90 360 0; dur: 10000; loop: true"></a-torus> -->
-                
-                <!-- Sketchfab Model (portal/cosmic model) -->
+        <!-- Astronaut Marker -->
+        <a-marker id="astronaut-marker" type="pattern" url="markers/astronaut.patt">
+            <a-entity id="astronaut-container" position="0 0.5 0">
                 <a-entity 
-                    id="interactive-model"
-                    class="clickable"
-                    gltf-model="#portal-model"
+                    id="astronaut-model-entity"
+                    class="clickable interactive-model"
+                    gltf-model="#astronaut-model"
                     position="0 0 0" 
-                    scale="0.1 0.1 0.1"
-                    <!-- scale="0.003 0.003 0.003" -->
+                    scale="0.9 0.9 0.9"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 15000; easing: linear"
                     animation-mixer>
                 </a-entity>
                 
-                <!-- Portal particles - keep these for added effect -->
-                <a-entity position="0 0.1 0" particle-system="preset: dust; color: #9400D3, #00FFFF, #FF00FF; 
-                                                            particleCount: 150; size: 0.1; maxAge: 2;
-                                                            velocityValue: 0.1 0.3 0.1; 
-                                                            accelerationValue: 0 -0.1 0"></a-entity>
+                <!-- Space particles -->
+                <a-entity position="0 0.1 0" particle-system="preset: dust; color: #FFFFFF, #4285F4; 
+                                                            particleCount: 100; size: 0.05; maxAge: 2;
+                                                            velocityValue: 0.1 0.1 0.1;"></a-entity>
                 
-                <!-- Portal sound -->
-                <a-sound src="#portal-sound" autoplay="true" loop="true" volume="0.5"></a-sound>
+                <!-- Text information -->
+                <a-text value="Space Explorer" position="0 1.2 0" scale="0.8 0.8 0.8" align="center" color="#4285F4"></a-text>
+                
+                <!-- Sound -->
+                <a-entity id="astronaut-sound" sound="src: #space-ambience; autoplay: false; loop: true; volume: 0.3;"></a-entity>
             </a-entity>
         </a-marker>
-
         
+        <!-- Deep Space Marker -->
+        <a-marker id="space-marker" type="pattern" url="markers/space.patt">
+            <a-entity id="space-container" position="0 0.5 0">
+                <a-entity 
+                    id="space-model-entity"
+                    class="clickable interactive-model"
+                    gltf-model="#space-model"
+                    position="0 0 0" 
+                    scale="0.08 0.08 0.08"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 30000; easing: linear">
+                </a-entity>
+                
+                <!-- Stars effect -->
+                <a-entity position="0 0 0" particle-system="preset: stars; color: #FFFFFF; 
+                                                         particleCount: 200; size: 0.05; maxAge: 5;
+                                                         velocityValue: 0.01 0.01 0.01;
+                                                         velocitySpread: 0.5 0.5 0.5;"></a-entity>
+                
+                <!-- Text information -->
+                <a-text value="The Vast Universe" position="0 1.2 0" scale="0.8 0.8 0.8" align="center" color="#FFFFFF"></a-text>
 
+                <a-entity id="space-sound" sound="src: #space-ambience; autoplay: false; loop: true; volume: 0.2;"></a-entity>
+            </a-entity>
+        </a-marker>
+        
+        <!-- UFO Marker -->
+        <a-marker id="ufo-marker" type="pattern" url="markers/ufo.patt">
+            <a-entity id="ufo-container" position="0 0.7 0">
+                <a-entity 
+                    id="ufo-model-entity"
+                    class="clickable interactive-model"
+                    gltf-model="#ufo-model"
+                    position="0 0 0" 
+                    scale="0.7 0.7 0.7"
+                    animation="property: position; to: 0 1 0; loop: true; dir: alternate; dur: 2000; easing: easeInOutQuad"
+                    animation__2="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear">
+                </a-entity>
+                
+                <!-- UFO beam effect -->
+                <a-cone position="0 -1 0" radius-bottom="0.5" radius-top="0.1" height="1.2" color="#4285F4" opacity="0.3"
+                        animation="property: opacity; to: 0.6; loop: true; dir: alternate; dur: 1000"></a-cone>
+                
+                <!-- Text information -->
+                <a-text value="Alien Visitor" position="0 1.5 0" scale="0.8 0.8 0.8" align="center" color="#4285F4"></a-text>
+                
+                <!-- Sound -->
+                <a-entity id="ufo-sound" sound="src: #ufo-sound; autoplay: false; loop: true; volume: 0.3;"></a-entity>            </a-entity>
+        </a-marker>
+        
+        <!-- Space Travel Marker -->
+        <a-marker id="travel-marker" type="pattern" url="markers/travel.patt">
+            <a-entity id="travel-container" position="0 0.5 0">
+                <a-entity 
+                    id="travel-model-entity"
+                    class="clickable interactive-model"
+                    gltf-model="#travel-model"
+                    position="0 0 0" 
+                    scale="0.01 0.01 0.01"
+                    animation="property: position; to: 0 0.5 0; loop: true; dir: alternate; dur: 2000; easing: easeInOutQuad">
+                </a-entity>
+                
+                <!-- Speed lines -->
+                <a-entity position="0 0 0" particle-system="preset: dust; color: #FFFFFF, #4285F4, #FFFF00;
+                                                          particleCount: 150; size: 0.1; maxAge: 1;
+                                                          velocityValue: 0.3 0 0.3;
+                                                          accelerationValue: 0.1 0 0.1;"></a-entity>
+                
+                <!-- Text information -->
+                <a-text value="Warp Speed" position="0 1.2 0" scale="0.8 0.8 0.8" align="center" color="#FFFF00"></a-text>
+
+                <a-entity id="travel-sound" sound="src: #space-ambience; autoplay: false; loop: true; volume: 0.2; playbackRate: 1.5;"></a-entity>
+            </a-entity>
+        </a-marker>
+        
+        <!-- Alien Marker -->
+        <a-marker id="alien-marker" type="pattern" url="markers/alien.patt">
+            <a-entity id="alien-container" position="0 0.3 0">
+                <a-entity 
+                    id="alien-model-entity"
+                    class="clickable interactive-model"
+                    gltf-model="#alien-model"
+                    position="0 0 0" 
+                    scale="0.9 0.9 0.9"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear"
+                    animation-mixer>
+                </a-entity>
+                
+                <!-- Alien aura effect -->
+                <a-sphere position="0 0.5 0" radius="0.7" color="#00FF00" opacity="0.15"
+                          animation="property: opacity; to: 0.25; loop: true; dir: alternate; dur: 2000"></a-sphere>
+                
+                <!-- Text information -->
+                <a-text value="Extraterrestrial" position="0 1.5 0" scale="0.8 0.8 0.8" align="center" color="#00FF00"></a-text>
+
+                <a-entity id="alien-sound" sound="src: #ufo-sound; autoplay: false; loop: true; volume: 0.2; playbackRate: 0.8;"></a-entity>
+            </a-entity>
+        </a-marker>
+        
+        <!-- Earth Marker -->
+        <a-marker id="earth-marker" type="pattern" url="markers/earth.patt">
+            <a-entity id="earth-container" position="0 0.5 0">
+                <a-entity 
+                    id="earth-model-entity"
+                    class="clickable interactive-model"
+                    gltf-model="#earth-model"
+                    position="0 0 0" 
+                    scale="0.9 0.9 0.9"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 25000; easing: linear">
+                </a-entity>
+                
+                <!-- Atmosphere effect -->
+                <a-sphere position="0 0 0" radius="2" color="#4285F4" opacity="0.1"
+                          animation="property: opacity; to: 0.2; loop: true; dir: alternate; dur: 3000"></a-sphere>
+                
+                <!-- Text information -->
+                <a-text value="Our Fragile Home" position="0 1.3 0" scale="0.9 0.9 0.9" align="center" color="#4285F4"></a-text>
+                
+                <!-- Sound -->
+                <a-entity id="earth-sound" sound="src: #earth-sound; autoplay: false; loop: true; volume: 0.3;"></a-entity>            </a-entity>
+        </a-marker>
     </a-scene>
     
     <!-- UI Elements -->
     <div class="ui-container">
         <div id="tracking-status"></div>
-        <div class="instructions">Scan markers to reveal glitches in reality</div>
+        <div class="instructions">Scan markers to begin your space journey</div>
     </div>
 
     <div class="help-card">
-        <h3>Reality Glitch AR</h3>
-        <p>Point your camera at the markers to reveal glitches in reality.</p>
-        <p>Tap on objects to interact with them!</p>
-        <button id="close-help">Got it</button>
+        <h3>Space Reality Journey</h3>
+        <p>Point your camera at the markers to explore space elements.</p>
+        <p>• Tap to interact with objects</p>
+        <p>• Pinch to zoom and rotate models</p>
+        <p>• Find all 6 markers to complete your journey!</p>
+        <button id="close-help">Begin Exploration</button>
     </div>
     
     <!-- Debug panel for mobile testing -->
